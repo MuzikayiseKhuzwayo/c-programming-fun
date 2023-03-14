@@ -22,14 +22,14 @@ int check_move(char *move)
          */
         int i, j, k, valid;
 
-        char notes[]="abcdefgh12345678KQNBPR"
+        char notes[]="abcdefgh12345678KQNBPR";
 
         valid = 0;
         i = strlen(move);
 
         if (i > 1 && i < 6)
         {
-                if (move == '0-0' || move == '0-0-0')
+                if ((strcmp(move, "0-0") == 0) || (strcmp(move, "0-0-0") == 0))
                 {
                         return(1);
                 }
@@ -39,7 +39,7 @@ int check_move(char *move)
                         if (j == 2 && (move[0] > 96 && move[0] < 124) && (move[1] > 48 && move[1] < 57))
                                 valid = 1;
                         else if (j == 3 && (move[0] > 96 && move[0] < 124) && (move[1] > 48 && move[1] < 57)
-                                        && (int)strspn(move[2], "QBKR"))
+                                        && (int)strspn("QBKR", move))
                                 valid = 1;
                         else if (j == 4 && (move[0] > 64 && move[0] < 92) && move[1] == 'x' &&
                                         (move[2] > 96 && move[2] < 124) && (move[3] > 48 && move[3] < 57))

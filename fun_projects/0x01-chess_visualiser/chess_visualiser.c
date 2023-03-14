@@ -71,9 +71,17 @@ int main(int argc, char *argv[])
 			 */
 			if (check_move(argv[i]))
 			{
-				update_board(board, argv[i]);
+				if (check_board(board, argv[i], (i % 2)))
+				{		
+					update_board(board, argv[i], (i % 2));
+				}
+				else
+				{
+					chk++;
+					break;
+				}
 			}
-			else if (check_move(argv[i]) != 1)
+			else
 			{
 				chk++;
 				break;
