@@ -10,7 +10,7 @@
  *
  * Return: 1 if valid; 0 if invalid
  */
-int check_board(char (*b)[8], char *move)
+int check_board(char (*b)[8], char *move, int col)
 {
         /*
          * 1. check the last 3 chars of move
@@ -20,6 +20,7 @@ int check_board(char (*b)[8], char *move)
 	 * 	2.1 move with no occupation
 	 * 	2.2 take with occupation
 	 * 3. else move is invalid
+	 * 4. col is for which piece is moving which is useful
          */
 
 	int i, j, k, len;
@@ -34,11 +35,11 @@ int check_board(char (*b)[8], char *move)
 		{"a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"}
 	};
 
-	char *newpos;
+	char newpos[2], *retstr;
 	
-	len = (int)strlen(move);
-	
-	strcpy(newpos, &move[len - 2]);
+	len = (int)strlen(move);	
+	retstr = strcpy(newpos, &move[len - 2]);
+	printf("the length of %s is %d and new position is %s\n", move, len, newpos);
 	for (i = 0; i < 8; i++)
 	{
 		for (j = 0; j < 8; j++)

@@ -22,25 +22,25 @@ int check_move(char *move)
          */
         int i, j, k, valid;
 
-        char notes[]="abcdefgh12345678KQNBPR";
+        char notes[]="abcdefgh12345678KQNBR";
 
-        valid = 0;
-        i = strlen(move);
+        valid = 0, i = (int)strlen(move);
 
-        if (i > 1 && i < 6)
+        if (i > 1 && i <= 6)
         {
                 if ((strcmp(move, "0-0") == 0) || (strcmp(move, "0-0-0") == 0))
                 {
                         return(1);
                 }
                 j = strspn(move, notes);
+		printf("%s has len %d and j equal %d\n", move, i, j);
                 if (j = i)
                 {
                         if (j == 2 && (move[0] > 96 && move[0] < 124) && (move[1] > 48 && move[1] < 57))
                                 valid = 1;
-                        else if (j == 3 && (move[0] > 96 && move[0] < 124) && (move[1] > 48 && move[1] < 57)
-                                        && (int)strspn("QBKR", move))
-                                valid = 1;
+                        else if (j == 3 && (move[1] > 96 && move[1] < 124) && (move[2] > 48 && move[2] < 57)
+                                        && (int)strspn("QBKRN", &move[0]))
+				valid = 1;
                         else if (j == 4 && (move[0] > 64 && move[0] < 92) && move[1] == 'x' &&
                                         (move[2] > 96 && move[2] < 124) && (move[3] > 48 && move[3] < 57))
                                 valid = 1;

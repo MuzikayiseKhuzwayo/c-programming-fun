@@ -10,14 +10,15 @@
  *
  * Return: Nothing
  */
-void update_board(char (*b)[8], char *move)
+void update_board(char (*b)[8], char *move, int col)
 {
         /*
          * check_board has already been checked, so just move piece
-	 *
+	 * col is for the colour of the piece, very useful
          */
-        int i, j, k, len;
-	char *newpos, *oldpos, *file, piece;
+        int i, j, k, l, len, broke;
+	char newpos[3], oldpos[3], *file, *retstr;
+	char *piece[2] = {"pnbrqk", "nPBRQK"};
         char *arr[8][8] = {
                 {"a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8"},
                 {"a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7"},
@@ -29,30 +30,41 @@ void update_board(char (*b)[8], char *move)
                 {"a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"}
         };
 
-        len = (int)strlen(move);
+        len = (int)strlen(move), l = 0, broke = 0;
 
 	file = "abcdefgh";
 
-	strcpy(newpos, &move[len - 2]);
+	retstr = strcpy(newpos, &move[len - 2]);
+	newpos[2] = '\0';
 
 	if (len == 2)
 	{
 		k = (int)strcspn(file, move);
+		l = col;
 		for (i = 0; i < 8; i++)
 		{
-			if (b[i][k] == 'p')
+			printf("piece is %c\n", piece[col][l]);
+			if (b[i][k] == piece[col][l])
+			{
 				b[i][k] = ' ';
+				break;
+			}
 		}
 	}
 	for (i = 0; i < 8; i++)
 	{
 		for (j = 0; j < 8; j++)
 		{
+			printf("comparing %s and %s\n", newpos, arr[i][j]);
 			if ((int)strcmp(newpos, arr[i][j]) == 0)
 			{
-				b[i][j] = piece;
+				b[i][j] = piece[col][l];
+				printf("Updated position %s with piece %c\n", newpos, piece[col][l]);
+				broke = 1;
+				break;
 			}
 		}
+		if (broke)
+			break;
 	}
-
 }

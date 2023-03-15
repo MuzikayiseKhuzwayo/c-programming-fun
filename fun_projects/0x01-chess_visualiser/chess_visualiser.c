@@ -49,31 +49,42 @@ int main(int argc, char *argv[])
         	{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
         	{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
         	{'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
-        	{'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'},
+        	{'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'}
 	};
 	
-	int i, j, chk;
+	int i, j, k, chk;
 
-	chk = 0;
-
+	chk = 0, k = 1;
+	printf("Test\n");
 	if (argc == 1)
 	{
 		print_board(board);
+		printf("\nMoves: None\n");
 		return (0);
 	}
-	else if (argc > 1)
+	else
 	{
 		for (i = 1; i < argc; i++)
 		{
 			/*
 			 * check if argv[i] is valid, then update board
 			 * if not valid, break out and print error message
+			 * Update: added new value for checking white(0) or black(1)
 			 */
+			printf("Inside main\n");
+			printf("CHecking move validity and syntax for move: %s\n", argv[i]);
 			if (check_move(argv[i]))
 			{
+				printf("Done checking checking move\n");
+				printf("Checking the board if move %s is possible\n", argv[i]);
+				fflush(stdout);
 				if (check_board(board, argv[i], (i % 2)))
-				{		
+				{
+					printf("Done checking board\n");
+					printf("Updating board for move %s\n", argv[i]);
+					fflush(stdout);
 					update_board(board, argv[i], (i % 2));
+					printf("Done updating board\n");
 				}
 				else
 				{
@@ -90,9 +101,18 @@ int main(int argc, char *argv[])
 	}
 	if (chk)
 	{
-		printf("The Moves you povided were Invalid/Incorrect/Not-Allowed\n");
+		printf("The Moves you provided were Invalid/Incorrect/Not-Allowed\n");
 		return (1);
 	}
 	print_board(board);
+	printf("\nMoves:");
+	for (i = 1; i < argc; i++)
+	{
+		if (i % 2 == 1)
+			printf("%d. %s", k++, argv[i]);
+		else if (i % 2 == 0)
+			printf(" %s,", argv[i]);
+	}
+	printf("\n");
 	return (0);
 }
